@@ -14,29 +14,30 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package net.exacode.eventbus.dispatch;
+package net.exacode.eventbus.util.handler;
 
-import java.util.Collection;
+import java.util.ArrayList;
+import java.util.List;
 
-import net.exacode.eventbus.EventBus;
-import net.exacode.eventbus.handler.MethodHandler;
+import net.exacode.eventbus.EventHandler;
 
-/**
- * Dispatches events in synchronous way.
- * <p>
- * It is default {@link DispatchStrategy} used by {@link EventBus}.
- * 
- * @author mendlik
- * 
- */
-public class SyncDispatchStrategy implements DispatchStrategy {
+import org.fest.assertions.api.Assertions;
 
-	@Override
-	public void dispatchEvent(Object event,
-			Collection<MethodHandler> handlerMethods) {
-		for (MethodHandler wrapper : handlerMethods) {
-			wrapper.handleEvent(event);
-		}
+public class ObjectHandler implements TestEventHandler<Object> {
+	private final List<Object> events = new ArrayList<Object>();
+
+	@EventHandler
+	public void hereHaveAnObj(Object obj) {
+		events.add(obj);
 	}
 
+	public void methodWithoutAnnotation(String string) {
+		Assertions
+				.fail("Event bus must not call methods without appropriate annotation!");
+	}
+
+	@Override
+	public List<Object> getEvents() {
+		return events;
+	}
 }

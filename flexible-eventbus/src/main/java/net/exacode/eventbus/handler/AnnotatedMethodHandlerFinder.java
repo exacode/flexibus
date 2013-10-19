@@ -18,10 +18,8 @@ package net.exacode.eventbus.handler;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -62,8 +60,7 @@ public class AnnotatedMethodHandlerFinder<A extends Annotation> implements
 		Class<?> clazz = listener.getClass();
 
 		for (Method method : clazz.getMethods()) {
-			A eventHandlerAnnotation = findMethodAnnotation(method,
-					annotationType);
+			A eventHandlerAnnotation = method.getAnnotation(annotationType);
 			if (eventHandlerAnnotation != null) {
 				Class<?>[] parameterTypes = method.getParameterTypes();
 				if (parameterTypes.length != 1) {
@@ -95,25 +92,4 @@ public class AnnotatedMethodHandlerFinder<A extends Annotation> implements
 		return methodsInListener;
 	}
 
-	private A findMethodAnnotation(Method method, Class<A> annotationType) {
-		return recursivelyFindAnnotation(new ArrayList<Annotation>(),
-				method.getDeclaredAnnotations(), annotationType);
-	}
-
-	@SuppressWarnings("unchecked")
-	private A recursivelyFindAnnotation(List<Annotation> checkedAnnotations,
-			Annotation[] annotations, Class<A> annotationTargetType) {
-		for (Annotation annotation : annotations) {
-			if (!checkedAnnotations.contains(annotation)) {
-				if (annotationTargetType.isInstance(annotation)) {
-					return (A) annotation;
-				}
-				checkedAnnotations.add(annotation);
-				return recursivelyFindAnnotation(checkedAnnotations, annotation
-						.annotationType().getDeclaredAnnotations(),
-						annotationTargetType);
-			}
-		}
-		return null;
-	}
 }

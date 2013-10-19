@@ -16,6 +16,9 @@
  */
 package net.exacode.eventbus;
 
+import java.util.Collection;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Set;
 
 import net.exacode.eventbus.builder.EventBusBuilder;
@@ -103,15 +106,50 @@ import net.exacode.eventbus.handler.MethodHandlerFinder;
  */
 public class EventBus {
 
+	/** simple struct representing an event and it's subscriber */
+	private static class HandlerWithEvent {
+		final Object event;
+		final Collection<MethodHandler> handlers;
+		final DispatchStrategy dispatchStrategy;
+
+		public HandlerWithEvent(Object event,
+				Collection<MethodHandler> handlers,
+				DispatchStrategy dispatchStrategy) {
+			this.event = event;
+			this.handlers = handlers;
+			this.dispatchStrategy = dispatchStrategy;
+		}
+
+		public void execute() {
+			dispatchStrategy.dispatchEvent(event, handlers);
+		}
+	}
+
+	public static EventBusBuilder builder() {
+		return new EventBusBuilder();
+	}
+
 	private final String id;
 
 	private final HandlerRegistry handlerRegistry;
 
 	private final DispatchStrategy dispatchStrategy;
 
-	public static EventBusBuilder builder() {
-		return new EventBusBuilder();
-	}
+	/** true if the current thread is currently dispatching an event */
+	private final ThreadLocal<Boolean> isDispatching = new ThreadLocal<Boolean>() {
+		@Override
+		protected Boolean initialValue() {
+			return false;
+		}
+	};
+
+	/** queues of events for the current thread to dispatch */
+	private final ThreadLocal<Queue<HandlerWithEvent>> eventsToDispatch = new ThreadLocal<Queue<HandlerWithEvent>>() {
+		@Override
+		protected Queue<HandlerWithEvent> initialValue() {
+			return new LinkedList<HandlerWithEvent>();
+		}
+	};
 
 	public EventBus() {
 		this.id = EventBus.class.getSimpleName();
@@ -158,12 +196,13 @@ public class EventBus {
 		boolean dispatched = false;
 		if (handlerMethods != null && !handlerMethods.isEmpty()) {
 			dispatched = true;
-			dispatchStrategy.dispatchEvent(event, handlerMethods);
+			enqueueEventExecution(handlerMethods, event);
 		}
 
 		if (!dispatched && !(event instanceof DeadEvent)) {
 			post(new DeadEvent(event));
 		}
+		dispatchQueuedEvents();
 	}
 
 	/**
@@ -188,8 +227,6 @@ public class EventBus {
 	 * 
 	 * @param object
 	 *            object whose handler methods should be unregistered.
-	 * @throws IllegalArgumentException
-	 *             if the object was not previously registered.
 	 */
 	public void unregister(Object handler) {
 		handlerRegistry.removeHandler(handler);
@@ -198,6 +235,43 @@ public class EventBus {
 	@Override
 	public String toString() {
 		return "EventBus [id=" + id + "]";
+	}
+
+	/**
+	 * Queue the {@code event} for dispatch during
+	 * {@link #dispatchQueuedEvents()}. Events are queued in-order of occurrence
+	 * so they can be dispatched in the same order.
+	 */
+	private void enqueueEventExecution(Collection<MethodHandler> handlers,
+			Object event) {
+		eventsToDispatch.get().offer(
+				new HandlerWithEvent(event, handlers, dispatchStrategy));
+	}
+
+	/**
+	 * Drain the queue of events to be dispatched. As the queue is being
+	 * drained, new events may be posted to the end of the queue.
+	 */
+	private void dispatchQueuedEvents() {
+		// don't dispatch if we're already dispatching, that would allow
+		// reentrancy
+		// and out-of-order events. Instead, leave the events to be dispatched
+		// after the in-progress dispatch is complete.
+		if (isDispatching.get()) {
+			return;
+		}
+
+		isDispatching.set(true);
+		try {
+			Queue<HandlerWithEvent> events = eventsToDispatch.get();
+			HandlerWithEvent hadnlerWithEvent;
+			while ((hadnlerWithEvent = events.poll()) != null) {
+				hadnlerWithEvent.execute();
+			}
+		} finally {
+			isDispatching.remove();
+			eventsToDispatch.remove();
+		}
 	}
 
 }

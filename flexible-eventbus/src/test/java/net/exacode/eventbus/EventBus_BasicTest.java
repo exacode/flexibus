@@ -15,11 +15,13 @@
  */
 package net.exacode.eventbus;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import net.exacode.eventbus.util.EventBusTestUtils;
 import net.exacode.eventbus.util.handler.IntHandler;
+import net.exacode.eventbus.util.handler.ObjectHandler;
 import net.exacode.eventbus.util.handler.StringHandler;
 
 import org.fest.assertions.api.Assertions;
@@ -52,6 +54,94 @@ public class EventBus_BasicTest {
 		// then
 		EventBusTestUtils.checkEventHandling(handler,
 				Arrays.asList(EventBusTestUtils.STRING_EVENT));
+	}
+
+	@Test
+	public void shouldDistributeSingleEventToAnonymousHandler() {
+		// given
+		final List<String> events = new ArrayList<String>();
+		Object handler = new Object() {
+
+			@EventHandler
+			public void handleEvent(String event) {
+				events.add(event);
+			}
+
+		};
+		bus.register(handler);
+
+		// when
+		bus.post(EventBusTestUtils.STRING_EVENT);
+
+		// then
+		Assertions.assertThat(events.size()).isEqualTo(1);
+		Assertions.assertThat(events.get(0)).isEqualTo(
+				EventBusTestUtils.STRING_EVENT);
+	}
+
+	@Test
+	public void shouldDeliverEventToToBothHandlingMethods() {
+		// given
+		final List<String> events = new ArrayList<String>();
+		Object handler = new Object() {
+
+			@EventHandler
+			public void handleEvent(String event) {
+				events.add(event);
+			}
+
+			@EventHandler
+			public void handleEventTwo(String event) {
+				events.add(event);
+			}
+
+		};
+		bus.register(handler);
+
+		// when
+		bus.post(EventBusTestUtils.STRING_EVENT);
+
+		// then
+		Assertions.assertThat(events.size()).isEqualTo(2);
+		Assertions.assertThat(events.get(0)).isEqualTo(
+				EventBusTestUtils.STRING_EVENT);
+		Assertions.assertThat(events.get(1)).isEqualTo(
+				EventBusTestUtils.STRING_EVENT);
+	}
+
+	@Test
+	public void shouldDistributeEventsInPostingOrder() {
+		// given
+		ObjectHandler handler = new ObjectHandler();
+		Object[] events = new Object[] { new Object(), new Object() };
+		bus.register(handler);
+
+		// when
+		for (int i = 0; i < events.length; ++i) {
+			bus.post(events[i]);
+		}
+
+		// then
+		EventBusTestUtils.checkEventHandling(handler, Arrays.asList(events));
+	}
+
+	@Test
+	public void shouldDistributeEventsToDynamicallyRegisteredHandlers() {
+		// given
+		StringHandler handler1 = new StringHandler();
+		StringHandler handler2 = new StringHandler();
+
+		// when
+		bus.register(handler1);
+		bus.post(EventBusTestUtils.STRING_EVENT);
+		bus.register(handler2);
+		bus.post(EventBusTestUtils.STRING_EVENT);
+
+		// then
+		EventBusTestUtils.checkEventHandling(handler1,
+				EventBusTestUtils.STRING_EVENT, 2);
+		EventBusTestUtils.checkEventHandling(handler2,
+				EventBusTestUtils.STRING_EVENT);
 	}
 
 	@Test
@@ -137,6 +227,52 @@ public class EventBus_BasicTest {
 
 		// then
 		Assertions.assertThat(handler.getEvents().size()).isEqualTo(0);
+	}
+
+	public void shouldNotThrowExceptionOnUnregisterNotRegisteredHandlers() {
+		// when
+		bus.unregister(new Object());
+		bus.unregister(new StringHandler());
+	}
+
+	@Test
+	public void shouldUnregisterHandler() {
+		// given
+		StringHandler handler = new StringHandler();
+
+		// when
+		bus.register(handler);
+		bus.post(EventBusTestUtils.STRING_EVENT);
+		bus.unregister(handler);
+		bus.post(EventBusTestUtils.STRING_EVENT);
+
+		// then
+		EventBusTestUtils.checkEventHandling(handler,
+				EventBusTestUtils.STRING_EVENT);
+	}
+
+	@Test
+	public void shouldDistributeEventsToRegisteredHandlersOnly() {
+		// given
+		StringHandler handler1 = new StringHandler();
+		StringHandler handler2 = new StringHandler();
+
+		// when
+		bus.register(handler1);
+		bus.post(EventBusTestUtils.STRING_EVENT);
+		bus.register(handler2);
+		bus.post(EventBusTestUtils.STRING_EVENT);
+		bus.unregister(handler1);
+		bus.post(EventBusTestUtils.STRING_EVENT);
+		bus.unregister(handler2);
+		bus.post(EventBusTestUtils.STRING_EVENT);
+
+		// then
+		EventBusTestUtils.checkEventHandling(handler1,
+				EventBusTestUtils.STRING_EVENT, 2);
+		EventBusTestUtils.checkEventHandling(handler2,
+				EventBusTestUtils.STRING_EVENT, 2);
+
 	}
 
 }

@@ -16,7 +16,7 @@
  */
 package net.exacode.eventbus.dispatch;
 
-import java.util.Set;
+import java.util.Collection;
 
 import net.exacode.eventbus.handler.MethodHandler;
 
@@ -66,7 +66,8 @@ public class UniqueDispatchStrategy implements DispatchStrategy {
 	}
 
 	@Override
-	public void dispatchEvent(Object event, Set<MethodHandler> handlerMethods) {
+	public void dispatchEvent(Object event,
+			Collection<MethodHandler> handlerMethods) {
 		if (handlerMethods.size() > 1 && eventDescriptor.isUnique(event)) {
 			throw new IllegalStateException(
 					"More than one handlers subscribed to unique event. \nEvent: "

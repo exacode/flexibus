@@ -16,7 +16,7 @@
  */
 package net.exacode.eventbus.dispatch;
 
-import java.util.Set;
+import java.util.Collection;
 
 import net.exacode.eventbus.handler.MethodHandler;
 
@@ -38,5 +38,5 @@ public interface DispatchStrategy {
 	 * @param eventBus
 	 *            - source eventBus
 	 */
-	void dispatchEvent(Object event, Set<MethodHandler> handlerMethods);
+	void dispatchEvent(Object event, Collection<MethodHandler> handlerMethods);
 }

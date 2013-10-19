@@ -16,7 +16,7 @@
  */
 package net.exacode.eventbus.dispatch;
 
-import java.util.Set;
+import java.util.Collection;
 
 import net.exacode.eventbus.handler.MethodHandler;
 
@@ -83,7 +83,8 @@ public class AsyncDispatchStrategy implements DispatchStrategy {
 	}
 
 	@Override
-	public void dispatchEvent(Object event, Set<MethodHandler> handlerMethods) {
+	public void dispatchEvent(Object event,
+			Collection<MethodHandler> handlerMethods) {
 		if (eventDescriptor.isAsync(event)
 				&& !(event instanceof AsyncInvocationExceptionEvent)) {
 			asyncDispatch(event, handlerMethods);
@@ -93,7 +94,7 @@ public class AsyncDispatchStrategy implements DispatchStrategy {
 	}
 
 	private void asyncDispatch(final Object event,
-			Set<MethodHandler> handlerMethods) {
+			Collection<MethodHandler> handlerMethods) {
 		for (final MethodHandler methodHandler : handlerMethods) {
 			Thread eventDispatchThread = new Thread() {
 				@Override
@@ -106,7 +107,8 @@ public class AsyncDispatchStrategy implements DispatchStrategy {
 		}
 	}
 
-	private void syncDispatch(Object event, Set<MethodHandler> handlerMethods) {
+	private void syncDispatch(Object event,
+			Collection<MethodHandler> handlerMethods) {
 		for (MethodHandler wrapper : handlerMethods) {
 			wrapper.handleEvent(event);
 		}

@@ -23,21 +23,12 @@ import net.exacode.eventbus.EventHandler;
 
 import org.fest.assertions.api.Assertions;
 
-/**
- * A simple EventHadnler mock that records Integers.
- * 
- * For testing fun, also includes a landmine method that EventBus tests are
- * required <em>not</em> to call ({@link #methodWithoutAnnotation(Integer)}).
- * 
- * @author Cliff Biffle
- * @author mendlik
- */
-public class IntHandler implements TestEventHandler<Integer> {
-	private final List<Integer> events = new ArrayList<Integer>();
+public class ComparableHandler<E> implements TestEventHandler<Comparable<E>> {
+	private final List<Comparable<E>> events = new ArrayList<Comparable<E>>();
 
 	@EventHandler
-	public void hereHaveAnInteger(int integer) {
-		events.add(integer);
+	public void hereHaveAComparableObj(Comparable<E> cmp) {
+		events.add(cmp);
 	}
 
 	public void methodWithoutAnnotation(String string) {
@@ -46,7 +37,7 @@ public class IntHandler implements TestEventHandler<Integer> {
 	}
 
 	@Override
-	public List<Integer> getEvents() {
+	public List<Comparable<E>> getEvents() {
 		return events;
 	}
 }

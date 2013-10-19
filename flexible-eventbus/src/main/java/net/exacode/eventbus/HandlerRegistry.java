@@ -19,6 +19,7 @@ package net.exacode.eventbus;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -88,13 +89,10 @@ class HandlerRegistry {
 			try {
 				Set<MethodHandler> currentHandlers = eventHandlerMethods
 						.get(eventType);
-				if (currentHandlers == null
-						|| !currentHandlers.containsAll(entry.getValue())) {
-					throw new IllegalArgumentException(
-							"Missing event handler for an annotated method. Is "
-									+ handler + " registered?");
+				if (currentHandlers != null
+						&& currentHandlers.containsAll(entry.getValue())) {
+					currentHandlers.removeAll(eventMethodsInListener);
 				}
-				currentHandlers.removeAll(eventMethodsInListener);
 			} finally {
 				eventHandlerMethodsLock.writeLock().unlock();
 			}
@@ -108,7 +106,7 @@ class HandlerRegistry {
 	 * @return handlerMethods
 	 */
 	public Set<MethodHandler> findEventHandlerMethods(Class<?> eventType) {
-		Set<MethodHandler> handlerMethods = new HashSet<MethodHandler>();
+		Set<MethodHandler> handlerMethods = new LinkedHashSet<MethodHandler>();
 		Set<Class<?>> eventFlattenedTypes = flattenEventHierarchy(eventType);
 		for (Class<?> eventFlattenedType : eventFlattenedTypes) {
 			Set<MethodHandler> handlers = eventHandlerMethods

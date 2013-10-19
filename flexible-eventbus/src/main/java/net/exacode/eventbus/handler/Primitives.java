@@ -3,7 +3,7 @@ package net.exacode.eventbus.handler;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Primitives {
+class Primitives {
 	// safe because both Long.class and long.class are of type Class<Long>
 	@SuppressWarnings("unchecked")
 	public static <T> Class<T> wrap(Class<T> c) {
