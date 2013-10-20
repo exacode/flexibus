@@ -47,7 +47,7 @@ import net.exacode.eventbus.handler.MethodHandlerFinder;
  * <li>Available usage of primitive parameters in handler methods</li>
  * <li>Uses strategy pattern for event dispatching: {@link DispatchStrategy}</li>
  * <li>Uses strategy pattern for finding handler methods:
- * {@link DispatchStrategy}</li>
+ * {@link MethodHandlerFinder}</li>
  * <li>Can be easily configured and build with {@link EventBusBuilder}</li>
  * </ol>
  * 
