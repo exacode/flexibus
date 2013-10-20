@@ -39,40 +39,40 @@ public class EventBusTestUtils {
 		}
 	}
 
-	public static <E> void checkEventHandling(TestEventHandler<E> handler,
-			List<? extends E> events) {
-		List<E> handledEvents = handler.getEvents();
+	public static void checkEventHandling(TestEventHandler<?> handler,
+			List<?> events) {
+		List<?> handledEvents = handler.getEvents();
 		Assertions.assertThat(handledEvents.size()).isEqualTo(events.size());
-		for (E event : events) {
+		for (Object event : events) {
 			Assertions.assertThat(handledEvents.contains(event)).isTrue();
 		}
 	}
 
-	public static <E> void checkEventHandling(TestEventHandler<E> handler,
-			E event) {
-		List<E> handledEvents = handler.getEvents();
+	public static void checkEventHandling(TestEventHandler<?> handler,
+			Object event) {
+		List<?> handledEvents = handler.getEvents();
 		Assertions.assertThat(handledEvents.size()).isEqualTo(1);
 		Assertions.assertThat(handledEvents.contains(event)).isTrue();
 	}
 
-	public static <E> void checkEventHandling(
-			List<? extends TestEventHandler<E>> handlers,
-			List<? extends E> events) {
-		for (TestEventHandler<E> handler : handlers) {
+	public static void checkEventHandling(
+			List<? extends TestEventHandler<?>> handlers, List<?> events) {
+		for (TestEventHandler<?> handler : handlers) {
 			checkEventHandling(handler, events);
 		}
 	}
 
-	public static <E> void checkEventHandling(TestEventHandler<E> handler,
-			E event, int times) {
-		List<E> handledEvents = handler.getEvents();
+	public static void checkEventHandling(TestEventHandler<?> handler,
+			Object event, int times) {
+		List<?> handledEvents = handler.getEvents();
 		Assertions.assertThat(handledEvents.size()).isEqualTo(times);
 		Assertions.assertThat(handledEvents.contains(event)).isTrue();
 	}
 
-	public static <E> void checkEventHandling(
-			List<? extends TestEventHandler<E>> handlers, E event, int times) {
-		for (TestEventHandler<E> handler : handlers) {
+	public static void checkEventHandling(
+			List<? extends TestEventHandler<?>> handlers, Object event,
+			int times) {
+		for (TestEventHandler<?> handler : handlers) {
 			checkEventHandling(handler, event, times);
 		}
 	}

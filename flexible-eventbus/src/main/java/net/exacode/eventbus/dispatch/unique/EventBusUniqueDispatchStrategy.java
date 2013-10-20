@@ -14,29 +14,36 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package net.exacode.eventbus.dispatch;
+package net.exacode.eventbus.dispatch.unique;
 
+import java.util.Arrays;
 import java.util.Collection;
 
-import net.exacode.eventbus.EventBus;
+import net.exacode.eventbus.dispatch.DispatchStrategy;
 import net.exacode.eventbus.handler.MethodHandler;
 
 /**
- * Dispatches events in synchronous way.
- * <p>
- * It is default {@link DispatchStrategy} used by {@link EventBus}.
+ * Filters event handlers so only one registered handler will receive published
+ * event. Best fitted (event type) handler is used.
+ * 
  * 
  * @author mendlik
  * 
  */
-public class SyncDispatchStrategy implements DispatchStrategy {
+public class EventBusUniqueDispatchStrategy implements DispatchStrategy {
+
+	private final DispatchStrategy dispatchStrategy;
+
+	public EventBusUniqueDispatchStrategy(DispatchStrategy dispatchStrategy) {
+		this.dispatchStrategy = dispatchStrategy;
+	}
 
 	@Override
 	public void dispatchEvent(Object event,
 			Collection<MethodHandler> handlerMethods) {
-		for (MethodHandler wrapper : handlerMethods) {
-			wrapper.handleEvent(event);
+		for (MethodHandler methodHandler : handlerMethods) {
+			dispatchStrategy.dispatchEvent(event, Arrays.asList(methodHandler));
+			break;
 		}
 	}
-
 }

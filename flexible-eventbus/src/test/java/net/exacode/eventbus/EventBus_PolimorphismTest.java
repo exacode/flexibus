@@ -53,7 +53,7 @@ public class EventBus_PolimorphismTest {
 	}
 
 	@Test
-	public void shouldDeliverEventToToBothHandlingMethodsInTypeRelatedOrder() {
+	public void shouldDeliverEventToBothHandlingMethodsInTypeRelatedOrder() {
 		// given
 		final List<Object> events = new ArrayList<Object>();
 		final int[] handlingOrder = new int[] { 0, 0 };
@@ -89,7 +89,7 @@ public class EventBus_PolimorphismTest {
 	}
 
 	@Test
-	public void shouldDeliverEventToToBothHandlingMethodsInTypeRelatedOrder_reverse() {
+	public void shouldDeliverEventToBothHandlingMethodsInTypeRelatedOrder_reverse() {
 		// given
 		final List<Object> events = new ArrayList<Object>();
 		final int[] handlingOrder = new int[] { 0, 0 };

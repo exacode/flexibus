@@ -23,7 +23,8 @@ import java.util.Set;
 
 import net.exacode.eventbus.builder.EventBusBuilder;
 import net.exacode.eventbus.dispatch.DispatchStrategy;
-import net.exacode.eventbus.dispatch.SyncDispatchStrategy;
+import net.exacode.eventbus.dispatch.EventHandlerDispatchStrategy;
+import net.exacode.eventbus.dispatch.concurrent.SyncDispatchStrategy;
 import net.exacode.eventbus.handler.AnnotatedMethodHandlerFinder;
 import net.exacode.eventbus.handler.MethodHandler;
 import net.exacode.eventbus.handler.MethodHandlerFinder;
@@ -156,7 +157,7 @@ public class EventBus {
 		this.handlerRegistry = new HandlerRegistry(
 				new AnnotatedMethodHandlerFinder<EventHandler>(
 						EventHandler.class));
-		this.dispatchStrategy = new SyncDispatchStrategy();
+		this.dispatchStrategy = new EventHandlerDispatchStrategy();
 	}
 
 	public EventBus(String logId, MethodHandlerFinder methodHandlerFinder,
