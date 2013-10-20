@@ -3,7 +3,7 @@
 	<artifactId>flexible-eventbus-parent</artifactId>
 	<groupId>net.exacode.eventbus</groupId>
 	<name>Flexible Eventbus Parent</name>
-	<version>0.0.1</version>
+	<version>0.0.2-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<distributionManagement>
