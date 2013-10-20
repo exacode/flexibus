@@ -1,11 +1,11 @@
 Flexible EventBus
 =================
 
-This EventBus is based on event bus from (guava)[http://code.google.com/p/guava-libraries/wiki/EventBusExplained]. Hopefully it doesn't break the license (otherwise please contact).
+This EventBus is based on event bus from [guava](http://code.google.com/p/guava-libraries/wiki/EventBusExplained). Hopefully it doesn't break the license (otherwise please contact).
 
 Modifications
 -------------
-Provided modifications opens this EventBus for (magic things)[https://code.google.com/p/guava-libraries/wiki/EventBusExplained#Why_can't_I_do_<magic_thing>_with_EventBus_?] like:
+Provided modifications opens this EventBus for [magic things](https://code.google.com/p/guava-libraries/wiki/EventBusExplained#Why_can't_I_do_<magic_thing>_with_EventBus_?) like:
 - changing event handler annotation
 - providing strategy for event dispatching `DispatchStrategy`
 - providing startegy for finding handler methods `MethodHandlerFinder`
