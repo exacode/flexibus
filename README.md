@@ -16,8 +16,8 @@ Provided modifications opens this EventBus for [magic things](https://code.googl
 Eventbus for Spring Framework!
 ------------------------------
 Along with [flexible-eventbus](/flexible-eventbus) there is also [spring-flexible-eventbus](/spring-flexible-eventbus) project that inegrates eventbus with spring environemnt. Try it out or take a look at example: 
-- (TestConfiguration)[/spring-flexible-eventbus/src/main/test/net/exacode/eventbus/spring/TestConfiguration.java]
-- (Simple usage)[/spring-flexible-eventbus/src/main/test/net/exacode/eventbus/spring/SpringEventBusPostProcessorTest.java]
+- [TestC(onfiguration](/spring-flexible-eventbus/src/main/test/net/exacode/eventbus/spring/TestConfiguration.java)
+- [Simple usage](/spring-flexible-eventbus/src/main/test/net/exacode/eventbus/spring/SpringEventBusPostProcessorTest.java)
 
 __Configuration__
 
