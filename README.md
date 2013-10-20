@@ -14,10 +14,10 @@ Provided modifications opens this EventBus for (magic things)[https://code.googl
 - ...and it doesn't depend on guava library (Guava is a fairly sizable JAR file)
 
 Eventbus for spring!
-----------------
-Along with [flexible-eventbus](/blob/master/flexible-eventbus) there is also [spring-flexible-eventbus](/blob/master/spring-flexible-eventbus) project that inegrates eventbus with spring environemnt. Try it out or take a look at how simple it is: 
-- (TestConfiguration)[blob/master/spring-flexible-eventbus/src/main/test/net/exacode/eventbus/spring/TestConfiguration.java]
-- (Simple usage)[blob/master/spring-flexible-eventbus/src/main/test/net/exacode/eventbus/spring/SpringEventBusPostProcessorTest.java]
+--------------------
+Along with [flexible-eventbus](/flexible-eventbus) there is also [spring-flexible-eventbus](/spring-flexible-eventbus) project that inegrates eventbus with spring environemnt. Try it out or take a look at how simple it is: 
+- (TestConfiguration)[/spring-flexible-eventbus/src/main/test/net/exacode/eventbus/spring/TestConfiguration.java]
+- (Simple usage)[/spring-flexible-eventbus/src/main/test/net/exacode/eventbus/spring/SpringEventBusPostProcessorTest.java]
 
 Maven dependency
 ----------------
