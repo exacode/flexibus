@@ -1,12 +1,5 @@
+language: java
+
 notifications:
   email:
     - admin@exacode.net
-    
-language: java
-
-before_install:
-before_script:
-script: mvn clean install
-after_success:
-after_failure:
-after_script:
