@@ -1,5 +1,7 @@
-Flexible EventBus
-=================
+Flexibus - Flexible EventBus
+============================
+
+[![Flattr this!](https://api.flattr.com/button/flattr-badge-large.png)](https://flattr.com/thing/733518/Add-Flattr-button-on-GitHub-com "Flattr this!")
 
 This EventBus is based on [Guava](http://code.google.com/p/guava-libraries/wiki/EventBusExplained). Hopefully it doesn't break the license (otherwise please contact me).
 
@@ -7,17 +9,17 @@ Modifications
 -------------
 Provided modifications opens this EventBus for [magic things](https://code.google.com/p/guava-libraries/wiki/EventBusExplained#Why_can't_I_do_<magic_thing>_with_EventBus_?) like:
 - changing event handler annotation
-- providing strategy for event dispatching `DispatchStrategy`
-- providing strategy for finding handler methods `MethodHandlerFinder`
-- providing exception handler `ExceptionHandler`
+- providing strategy for event dispatching - `DispatchStrategy`
+- providing strategy for finding handler methods - `MethodHandlerFinder`
+- providing exception handler - `ExceptionHandler`
 - using parameters of primitive types in handler methods
-- ...and it doesn't depend on guava library (Guava is a fairly sizable JAR file)
+- ...and it doesn't depend on guava library (Guava is a sizeable jar file)
 
 Eventbus for Spring Framework!
 ------------------------------
-Along with [flexible-eventbus](/flexible-eventbus) there is also [spring-flexible-eventbus](/spring-flexible-eventbus) project that inegrates eventbus with spring environemnt. Try it out or take a look at example: 
-- [TestConfiguration](/spring-flexible-eventbus/src/test/java/net/exacode/eventbus/spring/TestConfiguration.java)
-- [Simple usage](/spring-flexible-eventbus/src/test/java/net/exacode/eventbus/spring/SpringEventBusPostProcessorTest.java)
+Along with [flexibus](/flexibus) there is also [flexibus-spring](/flexibus-spring) project that integrates eventbus with spring environment. Try it out or take a look at examples: 
+- [TestConfiguration](/flexibus-spring/src/test/java/net/exacode/eventbus/spring/TestConfiguration.java)
+- [Simple usage](/flexibus-spring/src/test/java/net/exacode/eventbus/spring/SpringEventBusPostProcessorTest.java)
 
 __Configuration__
 
@@ -73,8 +75,6 @@ and add appropriate dependency.
 
 		<dependency>
 			<groupId>net.exacode.eventbus</groupId>
-			<artifactId>flexible-eventbus</artifactId>
+			<artifactId>flexibus</artifactId>
 			<version>${project.version}</version>
 		</dependency>
-
-<a href='http://www.pledgie.com/campaigns/22342'><img alt='Click here to lend your support to: Exacode open projects and make a donation at www.pledgie.com !' src='http://www.pledgie.com/campaigns/22342.png?skin_name=chrome' border='0' /></a>

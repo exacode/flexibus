@@ -1,0 +1,5 @@
+notifications:
+  email:
+    - admin@exacode.net
+language: java
+script: mvn clean install
