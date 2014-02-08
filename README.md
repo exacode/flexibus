@@ -16,6 +16,23 @@ Provided modifications opens this EventBus for [magic things](https://code.googl
 - using parameters of primitive types in handler methods
 - ...and it doesn't depend on guava library (Guava is a sizeable jar file)
 
+__Example configuration of EventBus__
+
+		EventBus defaultBus = new EventBus(); // Uses default settings: exception logging, dead event logging, searches for methods annotated with @EventHandler
+
+		EventBus simpleBus = EventBus.builder()
+			.withLoggingExceptionHandler() // Logs exceptions
+			.withDeadEventLogHandler()     // Logs dead events
+			.annotatedMethodHandlerFindingStrategy(YourAnnotation.class) // Searches for methods annotated with @YourAnnotation
+			.buildEventBus();
+
+		EventBus advancedBus = EventBus.builder()
+			.exceptionHandler(yourExceptionHandler)
+			.eventDispatchStrategy(yourEventDispatchStrategy)
+			.methodHandlerFindingStrategy(yourMethodHandlerFindingStrategy)
+			.buildEventBus();
+
+
 Eventbus for Spring Framework!
 ------------------------------
 Along with [flexibus](/flexibus) there is also [flexibus-spring](/flexibus-spring) project that integrates eventbus with spring environment. Try it out or take a look at examples: 
