@@ -3,7 +3,7 @@ Flexibus - Flexible EventBus
 
 [![Flattr this!](https://api.flattr.com/button/flattr-badge-large.png)](https://flattr.com/thing/733518/Add-Flattr-button-on-GitHub-com "Flattr this!")
 
-[![Build Status](https://travis-ci.org/exacode/flexibus.png)](https://travis-ci.org/exacode/exacode.github.io)
+[![Build Status](https://travis-ci.org/exacode/flexibus.png)](https://travis-ci.org/exacode/flexibus)
 
 This EventBus is based on [Guava](http://code.google.com/p/guava-libraries/wiki/EventBusExplained). Hopefully it doesn't break the license (otherwise please contact me).
 
