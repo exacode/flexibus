@@ -23,7 +23,7 @@ import net.exacode.eventbus.EventHandler;
 import net.exacode.eventbus.dispatch.DispatchStrategy;
 import net.exacode.eventbus.dispatch.EventHandlerDispatchStrategy;
 import net.exacode.eventbus.exception.ExceptionHandler;
-import net.exacode.eventbus.exception.LoggingExceptionHandler;
+import net.exacode.eventbus.exception.ExceptionLoggingHandler;
 import net.exacode.eventbus.handler.AnnotatedMethodHandlerFinder;
 import net.exacode.eventbus.handler.MethodHandlerFinder;
 
@@ -41,7 +41,7 @@ public class EventBusBuilder {
 
 	private String logId;
 
-	private DeadEventLogHandler deadEventLogHandler;
+	private DeadEventLoggingHandler deadEventLogHandler;
 
 	private ExceptionHandler exceptionHandler;
 
@@ -68,12 +68,12 @@ public class EventBusBuilder {
 	}
 
 	public EventBusBuilder withLoggingExceptionHandler() {
-		this.exceptionHandler = new LoggingExceptionHandler();
+		this.exceptionHandler = new ExceptionLoggingHandler();
 		return this;
 	}
 
 	public EventBusBuilder withDeadEventLogHandler() {
-		this.deadEventLogHandler = new DeadEventLogHandler();
+		this.deadEventLogHandler = new DeadEventLoggingHandler();
 		return this;
 	}
 

@@ -30,11 +30,11 @@ import net.exacode.eventbus.handler.MethodHandler;
  * @author mendlik
  * 
  */
-public class EventBusUniqueDispatchStrategy implements DispatchStrategy {
+public class EventUniqueDispatchStrategy implements DispatchStrategy {
 
 	private final DispatchStrategy dispatchStrategy;
 
-	public EventBusUniqueDispatchStrategy(DispatchStrategy dispatchStrategy) {
+	public EventUniqueDispatchStrategy(DispatchStrategy dispatchStrategy) {
 		this.dispatchStrategy = dispatchStrategy;
 	}
 

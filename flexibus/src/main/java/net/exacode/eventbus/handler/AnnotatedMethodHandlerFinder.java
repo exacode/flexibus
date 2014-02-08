@@ -24,7 +24,7 @@ import java.util.Map;
 import java.util.Set;
 
 import net.exacode.eventbus.exception.ExceptionHandler;
-import net.exacode.eventbus.exception.LoggingExceptionHandler;
+import net.exacode.eventbus.exception.ExceptionLoggingHandler;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,7 +45,7 @@ public class AnnotatedMethodHandlerFinder<A extends Annotation> implements
 	private final ExceptionHandler exceptionHandler;
 
 	public AnnotatedMethodHandlerFinder(Class<A> annotationType) {
-		this(annotationType, new LoggingExceptionHandler());
+		this(annotationType, new ExceptionLoggingHandler());
 	}
 
 	public AnnotatedMethodHandlerFinder(Class<A> annotationType,

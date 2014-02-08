@@ -53,24 +53,19 @@ public class EventBus_PolimorphismTest {
 	}
 
 	@Test
-	public void shouldDeliverEventToBothHandlingMethodsInTypeRelatedOrder() {
+	public void shouldDeliverEventToBothHandlingMethods() {
 		// given
 		final List<Object> events = new ArrayList<Object>();
-		final int[] handlingOrder = new int[] { 0, 0 };
 		Object handler = new Object() {
-
-			int order = 1;
 
 			@EventHandler
 			public void handleStringEvent(String event) {
 				events.add(event);
-				handlingOrder[0] = order++;
 			}
 
 			@EventHandler
 			public void handleObjectEvent(Object event) {
 				events.add(event);
-				handlingOrder[1] = order++;
 			}
 
 		};
@@ -85,43 +80,6 @@ public class EventBus_PolimorphismTest {
 				EventBusTestUtils.STRING_EVENT);
 		Assertions.assertThat(events.get(1)).isEqualTo(
 				EventBusTestUtils.STRING_EVENT);
-		Assertions.assertThat(handlingOrder).isEqualTo(new int[] { 1, 2 });
-	}
-
-	@Test
-	public void shouldDeliverEventToBothHandlingMethodsInTypeRelatedOrder_reverse() {
-		// given
-		final List<Object> events = new ArrayList<Object>();
-		final int[] handlingOrder = new int[] { 0, 0 };
-		Object handler = new Object() {
-
-			int order = 1;
-
-			@EventHandler
-			public void handleObjectEvent(Object event) {
-				events.add(event);
-				handlingOrder[1] = order++;
-			}
-
-			@EventHandler
-			public void handleStringEvent(String event) {
-				events.add(event);
-				handlingOrder[0] = order++;
-			}
-
-		};
-		bus.register(handler);
-
-		// when
-		bus.post(EventBusTestUtils.STRING_EVENT);
-
-		// then
-		Assertions.assertThat(events.size()).isEqualTo(2);
-		Assertions.assertThat(events.get(0)).isEqualTo(
-				EventBusTestUtils.STRING_EVENT);
-		Assertions.assertThat(events.get(1)).isEqualTo(
-				EventBusTestUtils.STRING_EVENT);
-		Assertions.assertThat(handlingOrder).isEqualTo(new int[] { 1, 2 });
 	}
 
 	@Test
@@ -144,7 +102,7 @@ public class EventBus_PolimorphismTest {
 	 * 
 	 * Also checks delivery ordering in such cases.
 	 */
-	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@SuppressWarnings({ "rawtypes" })
 	@Test
 	public void shouldDeliverEventsByTheirSupertypes() {
 		// given

@@ -19,7 +19,7 @@ package net.exacode.eventbus.exception;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class LoggingExceptionHandler implements ExceptionHandler {
+public class ExceptionLoggingHandler implements ExceptionHandler {
 
 	private final Logger logger = LoggerFactory.getLogger(getClass());
 

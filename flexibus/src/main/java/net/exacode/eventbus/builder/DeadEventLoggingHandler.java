@@ -19,9 +19,16 @@ package net.exacode.eventbus.builder;
 import net.exacode.eventbus.DeadEvent;
 import net.exacode.eventbus.EventHandler;
 
-public class DeadEventLogHandler {
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+public class DeadEventLoggingHandler {
+
+	private final Logger logger = LoggerFactory.getLogger(getClass());
+
 	@EventHandler
 	public void handle(DeadEvent deadEvent) {
-
+		logger.trace("Dead event of type: {}, object: {}",
+				deadEvent.getClass(), deadEvent);
 	}
 }

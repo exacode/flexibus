@@ -21,6 +21,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Set;
 
+import net.exacode.eventbus.builder.DeadEventLoggingHandler;
 import net.exacode.eventbus.builder.EventBusBuilder;
 import net.exacode.eventbus.dispatch.DispatchStrategy;
 import net.exacode.eventbus.dispatch.EventHandlerDispatchStrategy;
@@ -158,6 +159,7 @@ public class EventBus {
 				new AnnotatedMethodHandlerFinder<EventHandler>(
 						EventHandler.class));
 		this.dispatchStrategy = new EventHandlerDispatchStrategy();
+		this.register(new DeadEventLoggingHandler());
 	}
 
 	public EventBus(String logId, MethodHandlerFinder methodHandlerFinder,
