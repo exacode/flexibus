@@ -21,7 +21,8 @@ import java.lang.annotation.Annotation;
 import net.exacode.eventbus.EventBus;
 import net.exacode.eventbus.EventHandler;
 import net.exacode.eventbus.dispatch.DispatchStrategy;
-import net.exacode.eventbus.dispatch.EventHandlerDispatchStrategy;
+import net.exacode.eventbus.dispatch.concurrent.AsyncDispatchStrategy;
+import net.exacode.eventbus.dispatch.concurrent.SyncDispatchStrategy;
 import net.exacode.eventbus.exception.ExceptionHandler;
 import net.exacode.eventbus.exception.ExceptionLoggingHandler;
 import net.exacode.eventbus.handler.AnnotatedMethodHandlerFinder;
@@ -77,6 +78,14 @@ public class EventBusBuilder {
 		return this;
 	}
 
+	public EventBusBuilder withSyncDispatchStrategy() {
+		return this.eventDispatchStrategy(new SyncDispatchStrategy());
+	}
+
+	public EventBusBuilder withAsyncDispatchStrategy() {
+		return this.eventDispatchStrategy(new AsyncDispatchStrategy());
+	}
+
 	public <A extends Annotation> EventBusBuilder annotatedMethodHandlerFindingStrategy(
 			Class<A> annotationType) {
 		this.methodHandlerFindingStrategy = new AnnotatedMethodHandlerFinder<A>(
@@ -100,7 +109,7 @@ public class EventBusBuilder {
 			}
 		}
 		if (eventDispatchStrategy == null) {
-			eventDispatchStrategy = new EventHandlerDispatchStrategy();
+			eventDispatchStrategy = new AsyncDispatchStrategy();
 		}
 		if (logId == null) {
 			logId = "EventBus";

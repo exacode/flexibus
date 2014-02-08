@@ -24,7 +24,7 @@ import java.util.Set;
 import net.exacode.eventbus.builder.DeadEventLoggingHandler;
 import net.exacode.eventbus.builder.EventBusBuilder;
 import net.exacode.eventbus.dispatch.DispatchStrategy;
-import net.exacode.eventbus.dispatch.EventHandlerDispatchStrategy;
+import net.exacode.eventbus.dispatch.concurrent.AsyncDispatchStrategy;
 import net.exacode.eventbus.dispatch.concurrent.SyncDispatchStrategy;
 import net.exacode.eventbus.handler.AnnotatedMethodHandlerFinder;
 import net.exacode.eventbus.handler.MethodHandler;
@@ -158,7 +158,7 @@ public class EventBus {
 		this.handlerRegistry = new HandlerRegistry(
 				new AnnotatedMethodHandlerFinder<EventHandler>(
 						EventHandler.class));
-		this.dispatchStrategy = new EventHandlerDispatchStrategy();
+		this.dispatchStrategy = new AsyncDispatchStrategy();
 		this.register(new DeadEventLoggingHandler());
 	}
 

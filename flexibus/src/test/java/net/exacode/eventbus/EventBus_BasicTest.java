@@ -39,7 +39,7 @@ public class EventBus_BasicTest {
 
 	@Before
 	public void setUp() {
-		bus = new EventBus();
+		bus = EventBus.builder().withSyncDispatchStrategy().buildEventBus();
 	}
 
 	@Test

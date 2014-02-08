@@ -74,8 +74,8 @@ public class EventBus_HandlerExceptionTest {
 	@Before
 	public void setUp() {
 		exceptionHandler = new RecordingExceptionHandler();
-		bus = EventBus.builder().exceptionHandler(exceptionHandler)
-				.buildEventBus();
+		bus = EventBus.builder().withSyncDispatchStrategy()
+				.exceptionHandler(exceptionHandler).buildEventBus();
 	}
 
 	@Test

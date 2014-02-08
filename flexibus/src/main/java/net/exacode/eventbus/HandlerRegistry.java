@@ -136,7 +136,7 @@ class HandlerRegistry {
 		Set<Class<?>> hierarchy = flattenHierarchyCache.get(concreteClass);
 		if (hierarchy == null) {
 			synchronized (flattenHierarchyCache) {
-				hierarchy = new HashSet<Class<?>>();
+				hierarchy = new LinkedHashSet<Class<?>>();
 				Class<?> currentClass = concreteClass;
 				while (currentClass != null) {
 					hierarchy.add(currentClass);

@@ -23,6 +23,7 @@ __Example configuration of EventBus__
 		EventBus simpleBus = EventBus.builder()
 			.withLoggingExceptionHandler() // Logs exceptions
 			.withDeadEventLogHandler()     // Logs dead events
+			.withAsyncDispatchStrategy()   // Dispatches events in asynchronous way (you can change it to SyncDispatchStrategy)
 			.annotatedMethodHandlerFindingStrategy(YourAnnotation.class) // Searches for methods annotated with @YourAnnotation
 			.buildEventBus();
 

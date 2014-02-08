@@ -36,7 +36,7 @@ public class EventBus_DeadEventTest {
 
 	@Before
 	public void setUp() {
-		bus = new EventBus();
+		bus = EventBus.builder().withSyncDispatchStrategy().buildEventBus();
 	}
 
 	@Test

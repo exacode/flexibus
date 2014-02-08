@@ -19,7 +19,7 @@ package net.exacode.eventbus.handler;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.util.HashMap;
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -80,7 +80,7 @@ public class AnnotatedMethodHandlerFinder<A extends Annotation> implements
 
 				Set<MethodHandler> handlers = methodsInListener.get(eventType);
 				if (handlers == null) {
-					handlers = new HashSet<MethodHandler>();
+					handlers = new LinkedHashSet<MethodHandler>();
 					methodsInListener.put(eventType, handlers);
 				}
 				handlers.add(handler);

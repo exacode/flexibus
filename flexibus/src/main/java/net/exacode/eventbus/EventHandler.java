@@ -39,6 +39,5 @@ import net.exacode.eventbus.handler.MethodHandlerFinder;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 public @interface EventHandler {
-	boolean async() default false;
 
 }

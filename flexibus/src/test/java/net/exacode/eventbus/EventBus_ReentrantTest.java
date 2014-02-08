@@ -32,7 +32,7 @@ public class EventBus_ReentrantTest {
 
 	@Before
 	public void setUp() {
-		bus = new EventBus();
+		bus = EventBus.builder().withSyncDispatchStrategy().buildEventBus();
 	}
 
 	@Test

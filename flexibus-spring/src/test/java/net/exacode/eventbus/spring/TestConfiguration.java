@@ -12,7 +12,7 @@ public class TestConfiguration {
 
 	@Bean
 	public EventBus eventBus() {
-		return new EventBus();
+		return EventBus.builder().withSyncDispatchStrategy().buildEventBus();
 	}
 
 	@Bean
