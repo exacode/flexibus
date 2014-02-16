@@ -17,38 +17,26 @@
 package net.exacode.eventbus.dispatch.concurrent;
 
 import java.util.Collection;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.concurrent.Executor;
 
 import net.exacode.eventbus.dispatch.DispatchStrategy;
 import net.exacode.eventbus.handler.MethodHandler;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Responsible for asynchronous event dispatching.
  * <p>
  * All events are executed in separate threads. You can customize thread pool by
- * providing your own {@link ExecutorService}.
+ * providing your own {@link Executor}.
  * 
  * @author mendlik
  * 
  */
 public class AsyncDispatchStrategy implements DispatchStrategy {
 
-	private final Logger logger = LoggerFactory.getLogger(getClass());
+	private final Executor executor;
 
-	private final ExecutorService executorService;
-
-	public AsyncDispatchStrategy(ExecutorService executorService) {
-		this.executorService = executorService;
-	}
-
-	public AsyncDispatchStrategy() {
-		int threads = EventTask.threadNumberByLoadFactor(0.5);
-		logger.debug("Creating thread pool of size: {}", threads);
-		this.executorService = Executors.newFixedThreadPool(threads);
+	public AsyncDispatchStrategy(Executor executor) {
+		this.executor = executor;
 	}
 
 	@Override
@@ -56,7 +44,7 @@ public class AsyncDispatchStrategy implements DispatchStrategy {
 			Collection<MethodHandler> handlerMethods) {
 		for (final MethodHandler methodHandler : handlerMethods) {
 			Runnable eventTask = new EventTask(event, methodHandler);
-			executorService.submit(eventTask);
+			executor.execute(eventTask);
 		}
 	}
 

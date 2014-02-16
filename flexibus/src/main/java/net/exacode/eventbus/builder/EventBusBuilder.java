@@ -118,7 +118,7 @@ public class EventBusBuilder {
 			}
 		}
 		if (eventDispatchStrategy == null) {
-			eventDispatchStrategy = new AsyncDispatchStrategy();
+			eventDispatchStrategy = new SingleThreadedAsyncDispatchStrategy();
 		}
 		if (logId == null) {
 			logId = "EventBus";
