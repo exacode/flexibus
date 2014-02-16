@@ -28,7 +28,8 @@ public class DeadEventLoggingHandler {
 
 	@EventHandler
 	public void handle(DeadEvent deadEvent) {
-		logger.trace("Dead event of type: {}, object: {}",
-				deadEvent.getClass(), deadEvent);
+		Object event = deadEvent.getEvent();
+		logger.trace("Dead event of type: {}, object: {}", event.getClass(),
+				event);
 	}
 }

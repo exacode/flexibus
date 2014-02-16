@@ -17,11 +17,13 @@
 package net.exacode.eventbus.builder;
 
 import java.lang.annotation.Annotation;
+import java.util.concurrent.ExecutorService;
 
 import net.exacode.eventbus.EventBus;
 import net.exacode.eventbus.EventHandler;
 import net.exacode.eventbus.dispatch.DispatchStrategy;
 import net.exacode.eventbus.dispatch.concurrent.AsyncDispatchStrategy;
+import net.exacode.eventbus.dispatch.concurrent.SingleThreadedAsyncDispatchStrategy;
 import net.exacode.eventbus.dispatch.concurrent.SyncDispatchStrategy;
 import net.exacode.eventbus.exception.ExceptionHandler;
 import net.exacode.eventbus.exception.ExceptionLoggingHandler;
@@ -83,7 +85,14 @@ public class EventBusBuilder {
 	}
 
 	public EventBusBuilder withAsyncDispatchStrategy() {
-		return this.eventDispatchStrategy(new AsyncDispatchStrategy());
+		return this
+				.eventDispatchStrategy(new SingleThreadedAsyncDispatchStrategy());
+	}
+
+	public EventBusBuilder withAsyncDispatchStrategy(
+			ExecutorService executorService) {
+		return this.eventDispatchStrategy(new AsyncDispatchStrategy(
+				executorService));
 	}
 
 	public <A extends Annotation> EventBusBuilder annotatedMethodHandlerFindingStrategy(
